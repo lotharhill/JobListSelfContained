@@ -1,0 +1,69 @@
+<html ng-app="myApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+  </head>
+  <body ng-controller="MyController">
+
+  <div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-md-10">
+              Search: <input ng-model="query">
+        <!--Body content-->
+        <div class="table-responsive">
+                    <table class="table table-striped sortable" data-pg-collapsed="">
+                        <thead>
+                            <tr data-pg-collapsed="">
+                              <th>Job Title</th>
+                                <th>Company Name</th>
+                                  <th>Title Code</th>
+                                 <th>City</th>
+                                 <th>Zip Code</th>
+                                <th>Date Posted</th>
+                                <th>Rep</th>
+                                <th>Interview Count</th>
+                                <th>Salary Lower</th>
+                                <th>Salary Upper</th>
+
+                            </tr>
+                        </thead>
+
+                    <tbody data-pg-collapsed="" >
+                   <tr ng-repeat="job in positions | filter:query">
+                     			<td>{{	job["Job Title"]	}}</td>
+                   				<td>{{	job["Company Name"]	}}</td>
+                   				<td>{{	job["Title Code"]	}}</td>
+                                <td>{{	job["City"]	}}</td>
+                        		<TD>{{	job["Zip"]	}}</TD>
+                        		<td>{{	job["Date Posted"]	}}</td>
+                        		<td>{{	job["Rep"]	}}</td>
+                        		<TD>{{	job["In Person Count"]	}}</TD>
+                        		<TD>{{	job["Salary Lower"]	}}</TD>
+                        		<td>{{	job["Salary Upper"]	}}</td>
+
+					</tr>
+					</tbody>
+					</table>
+      </div>
+    </div>
+  </div>
+  
+  
+    <script>
+      var myApp = angular.module("myApp", ["firebase"]);
+
+      myApp.controller("MyController", ["$scope", "$firebaseArray",
+        function($scope, $firebaseArray) {
+          var ref = new Firebase("https://blistering-fire-7592.firebaseIO.com");
+          $scope.positions = $firebaseArray(ref);
+        }
+      ]);
+    </script>
+  </body>
+</html>
